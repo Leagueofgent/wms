@@ -3,6 +3,8 @@ package com.warehouse.management.wms.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,6 +27,7 @@ import lombok.Setter;
 @ApiModel(value = "WarehousingRegistration对象", description = " 入库明细")
 public class WarehousingRegistration implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("id")

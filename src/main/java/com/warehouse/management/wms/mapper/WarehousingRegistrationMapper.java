@@ -2,6 +2,7 @@ package com.warehouse.management.wms.mapper;
 
 import com.warehouse.management.wms.entity.WarehousingRegistration;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author gent
  * @since 2023-12-20
  */
+@Mapper
 public interface WarehousingRegistrationMapper extends BaseMapper<WarehousingRegistration> {
 
 }

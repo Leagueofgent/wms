@@ -1,7 +1,8 @@
 package com.warehouse.management.wms.mapper;
 
-import com.warehouse.management.wms.entity.InventoryPositionLedger;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.warehouse.management.wms.entity.InventoryPositionLedger;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author gent
  * @since 2023-12-20
  */
+@Mapper
 public interface InventoryPositionLedgerMapper extends BaseMapper<InventoryPositionLedger> {
 
 }
