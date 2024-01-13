@@ -30,6 +30,7 @@ public class DepartmentController {
     private DepartmentServiceImpl departmentService;
 
     @GetMapping("/list")
+    @Tag(name = "部门列表")
     public Result list(){
         List<Department> list = departmentService.list();
         return Result.ok().data("list",list).message("获取列表成功");
