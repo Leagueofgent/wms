@@ -10,16 +10,9 @@ public class Swagger2Config {
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .group("public")
+                .group("admin")
                 .pathsToMatch("/admin/**")
                 .build();
     }
 
-    @Bean
-    public GroupedOpenApi privateApi() {
-        return GroupedOpenApi.builder()
-                .group("private")
-                .pathsToMatch("/private/**")
-                .build();
-    }
 }
