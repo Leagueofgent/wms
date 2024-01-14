@@ -1,5 +1,6 @@
 package com.warehouse.management.wms.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.warehouse.management.wms.config.RedisCache;
 import com.warehouse.management.wms.entity.LoginUser;
 import com.warehouse.management.wms.util.JwtUtil;
@@ -40,7 +41,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String subject = claims.getSubject();
         //从redis中获取用户信息
         String redisKey = "login:" + subject;
-        LoginUser loginUser = redisCache.getCacheObject(redisKey);
+        LoginUser loginUser;
+        Object cacheObject = redisCache.getCacheObject(redisKey);
+        if (cacheObject instanceof LoginUser) {
+            loginUser = (LoginUser) cacheObject;
+        } else {
+            loginUser = JSON.parseObject(JSON.toJSON(cacheObject).toString(), LoginUser.class);
+        }
+
         log.info("loginUser:{}", loginUser);
         if (Objects.isNull(loginUser)) {
             throw new RuntimeException("用户未登录");
