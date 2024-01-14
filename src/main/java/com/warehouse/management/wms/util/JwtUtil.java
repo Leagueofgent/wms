@@ -36,13 +36,15 @@ public class JwtUtil {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         SecretKey secretKey = generalKey();
         long timeMillis = System.currentTimeMillis();
-        Date date = new Date(timeMillis);
+        //token创建时间
+        Date createDate = new Date(timeMillis);
         if (ttlMillis == null) {
             ttlMillis = JwtUtil.JWT_TTL;
         }
         long expMillis = timeMillis + ttlMillis;
-        Date date1 = new Date(expMillis);
-        return Jwts.builder().setId(UUID).setSubject(subject).setIssuer("").setIssuedAt(date).signWith(signatureAlgorithm, secretKey).setExpiration(date1);
+        //token失效时间
+        Date expirationDate = new Date(expMillis);
+        return Jwts.builder().setId(UUID).setSubject(subject).setIssuer("gent").setIssuedAt(createDate).signWith(signatureAlgorithm, secretKey).setExpiration(expirationDate);
 
 
     }
@@ -71,16 +73,17 @@ public class JwtUtil {
 
     public static Claims parseJwt(String jwt) {
         SecretKey secretKey = generalKey();
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJwt(jwt).getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
     }
 
     public static void main(String[] args) throws Exception {
 //        String jwt = createJwt("222");
-        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlbnQiLCJzdWIiOiIyMjIiLCJpYXQiOjE3MDUxMjAyMzAsIm5iZiI6MTcwNTEyMDIzMCwiZXhwIjoxNzA1MjA2NjMwfQ.9OXLcy0RkWLekVDDJ9zL1LeVNGUcJkchmQce0QYVSE8";
-        String token1 = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjZTYwNjYxYmVjYmU0ZmIwYjU1MzZmZGY4MzQ3NzJmZCIsInN1YiI6IjIyMiIsImlzcyI6IiIsImlhdCI6MTcwNTEyMDYxMCwiZXhwIjoxNzA1MTI0MjEwfQ.mrUPC_nyGW-E04tFbdSPZZ5QBV0-mez0nX2vOiHSlfo";
-        Claims claims = parseJwt(token1);
 //        System.out.println(jwt);
-        System.out.println(claims);
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyMWYzZDY4Mjk2NDA0YjExYTEzZDViNmMyY2Q4YjA2NCIsInN1YiI6IjIyMiIsImlzcyI6ImdlbnQiLCJpYXQiOjE3MDUxNTM5NDcsImV4cCI6MTcwNTE1NzU0N30.TDw06tIdsJSr_hDr5aS1sQnanvcKembJ5m5kJtk_4E8";
+        Claims claims = parseJwt(token);
+        String subject = claims.getSubject();
+
+        System.out.println(subject);
     }
 
 }
