@@ -27,7 +27,7 @@ public class RedisCache {
      * @param key   缓存键
      * @param value 缓存值
      */
-    public <T> void setRedisTemplate(final String key, final String value) {
+    public <T> void setCacheObject(final String key, final T value) {
         redisTemplate.opsForValue().set(key, value);
     }
 
@@ -38,7 +38,7 @@ public class RedisCache {
      * @param timeUnit 时间颗粒度
      * @param <T>
      */
-    public <T> void setRedisTemplate(final String key, final String value, final Integer timeOut, final TimeUnit timeUnit) {
+    public <T> void setCacheObject(final String key, final T value, final Integer timeOut, final TimeUnit timeUnit) {
 
         redisTemplate.opsForValue().set(key, value, timeOut, timeUnit);
     }
@@ -50,7 +50,7 @@ public class RedisCache {
      * @param timeOut 超时时间
      * @return true:设置成功 false:设置失败
      */
-    public boolean expire(final String key, final Integer timeOut) {
+    public boolean expire(final String key, final long timeOut) {
         return expire(key, timeOut);
     }
 
@@ -62,8 +62,8 @@ public class RedisCache {
      * @param timeUnit 单位时间
      * @return true:设置成功 false:设置失败
      */
-    public boolean expire(final String key, final Integer timeOut, final TimeUnit timeUnit) {
-        return expire(key, timeOut, timeUnit);
+    public boolean expire(final String key, final long timeOut, final TimeUnit timeUnit) {
+        return redisTemplate.expire(key, timeOut, timeUnit);
     }
 
     /**
@@ -112,7 +112,7 @@ public class RedisCache {
     }
 
     /**
-     * 获得缓存的对象
+     * 获得缓存的list对象
      *
      * @param key 缓存的键
      * @param <T> 泛型
@@ -224,6 +224,7 @@ public class RedisCache {
 
     /**
      * 获得缓存的基本对象列
+     *
      * @param pattern 字符串前缀
      * @return 对象列表
      */
