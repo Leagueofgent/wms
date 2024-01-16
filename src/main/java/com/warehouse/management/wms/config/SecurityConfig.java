@@ -1,7 +1,5 @@
 package com.warehouse.management.wms.config;
 
-import com.warehouse.management.wms.filter.JwtAuthenticationTokenFilter;
-import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,14 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    @Resource
-    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,13 +32,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        Customizer<FormLoginConfigurer<HttpSecurity>> customizer = configurer -> configurer.loginPage("/login");
+        http.formLogin(customizer);
         //授权配置
-        http.authorizeRequests().requestMatchers("/login").permitAll()
+        http.authorizeRequests().requestMatchers("/login").permitAll() //访问 /login地址时不做授权认证
 
-                .anyRequest().authenticated();
+                .anyRequest().authenticated();//访问其他地址时，必须认证成功后才可以访问
         //关闭csrf功能
-        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable();
+//        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

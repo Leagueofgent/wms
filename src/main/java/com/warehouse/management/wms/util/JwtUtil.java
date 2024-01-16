@@ -76,14 +76,6 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
     }
 
-    public static void main(String[] args) throws Exception {
-//        String jwt = createJwt("222");
-//        System.out.println(jwt);
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyMWYzZDY4Mjk2NDA0YjExYTEzZDViNmMyY2Q4YjA2NCIsInN1YiI6IjIyMiIsImlzcyI6ImdlbnQiLCJpYXQiOjE3MDUxNTM5NDcsImV4cCI6MTcwNTE1NzU0N30.TDw06tIdsJSr_hDr5aS1sQnanvcKembJ5m5kJtk_4E8";
-        Claims claims = parseJwt(token);
-        String subject = claims.getSubject();
 
-        System.out.println(subject);
-    }
 
 }

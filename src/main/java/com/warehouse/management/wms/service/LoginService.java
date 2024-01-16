@@ -5,4 +5,5 @@ import com.warehouse.management.wms.entity.SysUser;
 
 public interface LoginService {
     Result login(SysUser sysUser);
+
 }

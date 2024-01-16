@@ -4,21 +4,35 @@ import com.warehouse.management.wms.comment.Result;
 import com.warehouse.management.wms.entity.SysUser;
 import com.warehouse.management.wms.service.LoginService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Slf4j
+@Controller
 public class LoginController {
 
     @Resource
     private LoginService loginService;
 
-    @PostMapping("/login")
-    public Result login(@RequestBody SysUser sysUser) {
-        System.out.println(sysUser.getUserName());
-        System.out.println(sysUser.getPassword());
-        return  loginService.login(sysUser);
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
     }
+
+/**
+    @RequestMapping("/login")
+    public Result login(@RequestBody SysUser sysUser) {
+        log.info("登陆方法的username:{}", sysUser.getUserName());
+        log.info("登陆方法的password:{}", sysUser.getPassword());
+        return loginService.login(sysUser);
+    }
+*/
+    @GetMapping("/logout")
+    public Result logout() {
+        log.info("访问进入");
+        return null;
+    }
+
 
 }

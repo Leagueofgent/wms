@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -30,10 +31,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        log.info("username:{}", username);
+        log.info("UserDetailsServiceImpl的username:{}", username);
         queryWrapper.eq(SysUser::getUserName, username);
         SysUser sysUser = sysUserMapper.selectOne(queryWrapper);
-        System.out.println(sysUser);
         //查询不到用户
         if (Objects.isNull(sysUser)) {
             throw new RuntimeException("用户名或者密码错误");
