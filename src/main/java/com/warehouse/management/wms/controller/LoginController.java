@@ -20,6 +20,16 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/main")
+    public String main(){
+        return "main";
+    }
+
+    @RequestMapping("/failure")
+    public String failure(){
+        return "failure";
+    }
+
 /**
     @RequestMapping("/login")
     public Result login(@RequestBody SysUser sysUser) {
