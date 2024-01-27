@@ -31,13 +31,13 @@ class WmsApplicationTests {
                 })
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("sys_user") // 设置需要生成的表名，不设置表名即为生成该数据库中所有的表
+                            .addInclude("permission") // 设置需要生成的表名，不设置表名即为生成该数据库中所有的表
                             .addTablePrefix("t_", "c_")  // 设置过滤表前缀
                             .entityBuilder().idType(IdType.ASSIGN_ID) //主键id自动生成策略 雪花算法
                             .logicDeleteColumnName("is_deleted") //数据库逻辑删除字段属性
                             .entityBuilder().enableRemoveIsPrefix().enableFileOverride()  //去掉布尔值的is_前缀
                             .enableLombok() //开启lombok模型
-                            .mapperBuilder().superClass(BaseMapper.class).enableMapperAnnotation()
+                            .mapperBuilder().superClass(BaseMapper.class).mapperAnnotation(org.apache.ibatis.annotations.Mapper.class).enableFileOverride()
                             .controllerBuilder().enableRestStyle().enableFileOverride()  //restful 所有controller都是RestController
                             .serviceBuilder().formatServiceFileName("%sService").enableFileOverride(); //去掉Service接口的首字母I
                 })

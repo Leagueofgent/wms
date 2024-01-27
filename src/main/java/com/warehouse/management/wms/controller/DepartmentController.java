@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,9 +33,9 @@ public class DepartmentController {
 
     @GetMapping("/list")
     @Tag(name = "部门列表")
-    public Result list(){
+    public Result list() {
         List<Department> list = departmentService.list();
-        return Result.ok().data("list",list).message("获取列表成功");
+        return Result.ok().data("list", list).message("获取列表成功");
     }
 
     @Tag(name = "新增部门")
@@ -48,5 +50,21 @@ public class DepartmentController {
         }
     }
 
+    @GetMapping("/list1")
+    @Tag(name = "部门列表")
+    public Result list1() {
+        List<Department> list = departmentService.list();
+        Map<Integer, List<Department>> departmentMap = new HashMap<>();
+        for (Department department : list) {
+            // 如果parentDepartmentId已经存在于map中，则添加当前部门到对应的列表中
+            if (departmentMap.containsKey(department.getParentDepartmentId())) {
+                departmentMap.get(department.getParentDepartmentId()).add(department);
+            } else {
+                // 如果parentDepartmentId不存在于map中，则创建一个新的列表并将其添加到map中
+                departmentMap.put(department.getParentDepartmentId(), List.of(department));
+            }
+        }
+        return Result.ok().data("list", departmentMap).message("获取列表成功");
+    }
 
 }
